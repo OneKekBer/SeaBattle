@@ -1,32 +1,46 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShipNamespace
 {
-    class Ship
+    public abstract class Ship
     {
-        public int size;
+        public int Size { get; protected set; }
 
-        public Ship(int size)
+        protected Ship(int size)
         {
-            this.size = size;
+            Size = size;
         }
     }
 
-
     class Craiser : Ship
     {
-       
         public Craiser(int size) : base(size)
         {
             
         }
     }
 
-
-
-
+    class Ruin : Ship
+    {
+        public Ruin(int size) : base(size)
+        {
+            
+        }
+    }
 }
+
+//public abstract class Ship
+//{
+//    public int size;
+//    public bool isDestroyed;
+
+//    public virtual void ShipWasDestroyed() 
+//    {
+//        isDestroyed = true;
+//    }
+
+//    public Ship(int size)
+//    {
+//        this.size = size;
+//    }
+//}

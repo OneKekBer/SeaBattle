@@ -6,67 +6,75 @@ using System.Threading.Tasks;
 
 using ShipNamespace;
 
+
 namespace BoardNamespace
 {
     class Board
     {
-        Random random = new Random();
+        public static Ship[,] board = new Ship[9, 9];
 
-        Ship[,] board = new Ship[5, 5];
-   
-        public void PlaceShip(Ship ship)
-        {
-            int randomX = random.Next(0, board.GetLength(0));
-            int randomY = random.Next(0, board.GetLength(0));
+        
 
-            (int x, int y) randomCoords = (randomY, randomX);
+        //public void PlaceShip(Ship ship)
+        //{
+        //    (int x, int y)[] allDirections = { (1, 0), (0, 1), (-1, 0), (0, -1) };
 
-            Console.WriteLine(randomCoords);
-            Console.WriteLine(ship.size);
+        //    Console.WriteLine();
 
-            board[randomY, randomX] = ship;
+        //    (int x, int y) randomCords = (random.Next(0, board.GetLength(0)), random.Next(0, board.GetLength(0)));
 
-            
+        //    Console.WriteLine("random coords 42 " + randomCords);
 
-            (int x, int y)[] directions = { (0, 1), (1, 0), (-1, 0), (0, -1) };
+        //    List<(int x, int y)> cache = new List<(int x, int y)>();
 
-            List<(int x, int y)> deleteList = new List<(int x, int y)>();
 
-            
-            while (true) 
-            {
-                int i = 1;
-                int counter = 0;
 
-                try
-                {
-                    (int x, int y) currentDirection = directions[counter];
+        //    if(board[randomCords.y, randomCords.x] == null) GenerateNewCoords(ref randomCords);
 
-                    while (true)
-                    {
-                        if (i == ship.size )
-                            break;
+        //    board[randomCords.y, randomCords.x] = ship;
 
-                        (int x, int y) newCoords = (randomY + (currentDirection.y * i), randomX + (currentDirection.x * i));
-                        Console.WriteLine("NEW " + newCoords.x + " " + newCoords.y);
-                        
-                        board[newCoords.y, newCoords.x] = ship;
+        //    int counter = 0; // для смены направления корбалей
+        //    int oneShipCounter = 0; // для постепенного увелечения корабля 
 
-                        i++;
-                    }
-                    break;
-                }
-                catch
-                {
-                    
-                    Console.WriteLine("index error");
-                    //deleteList.Clear();
-                    counter += 1;
-                }
-                if (i == ship.size)
-                    break;
-            }
-        }
+        //    bool mainFlag = true;
+        //    bool secondFlag = true;
+
+
+        //    while (mainFlag)
+        //    {
+
+        //        //обнуление 
+        //        secondFlag = true;
+        //        oneShipCounter = 0;
+
+        //        if (counter > 4) GenerateNewCoords(ref randomCords);
+        //        (int x, int y) currDirection = allDirections[counter];
+
+        //        while (secondFlag)
+        //        {
+        //            if (oneShipCounter == ship.Size) mainFlag = false;
+        //            (int x, int y) nextStep = (randomCords.x + currDirection.x * oneShipCounter, randomCords.y + currDirection.y * oneShipCounter);
+
+        //            Console.WriteLine("next step 61 " + nextStep);
+
+        //            if (nextStep.x >= 9 || nextStep.y >= 9 )
+        //            {
+        //                Console.WriteLine();
+        //                Console.WriteLine("вне границ ");
+        //                ClearCache(cache);
+        //                counter++;
+        //                secondFlag = false;
+        //            }
+
+        //            board[nextStep.y, nextStep.x] = ship;
+        //            cache.Add(nextStep);
+        //            oneShipCounter++;
+        //        }
+
+        //    }
+
+        //}
+
 
         public void FillBoard()
         {
@@ -84,34 +92,41 @@ namespace BoardNamespace
             Console.WriteLine(board[coords.y - 1, coords.x - 1]);
         }
 
-        public Ship ShootToTtile((int x, int y) coords) 
+        public void ShootToTtile((int x, int y) coords) 
         {
-            try
+            if (board[coords.y - 1, coords.x - 1] != null)
             {
-                return board[coords.y - 1, coords.x - 1];
+                board[coords.y - 1, coords.x - 1] = new Ruin(1);
+                
+                Console.WriteLine("gotcha");
+
+                return;
             }
-            catch (IndexOutOfRangeException ex)
-            {
-                Console.WriteLine($"Incorrect action!!! {ex}");
-            }
-            return null;
+            Console.WriteLine("unluck!!!");
         }
 
         public void PrintBoard()
         {
+            Console.WriteLine(" 1  2  3  4  5  6  7  8  9 ");
             for (int i = 0; i < board.GetLength(0); i++)
             {
                 for(int j = 0; j < board.GetLength(1); j++) 
                 {
-                    if (board[i, j] != null)
+                    if (board[i, j] != null && board[i, j] is Ruin )
                     {
-                        Console.Write("x \t");
+                        Console.Write(" x ");
                         continue;
                     }
-                    Console.Write("o \t");
+                    if (board[i, j] != null)
+                    {
+                        Console.Write(" u ");
+                        continue;
+                    }
+                    Console.Write(" o ");
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine(" 1  2  3  4  5  6  7  8  9 ");
         }
     }
 }
