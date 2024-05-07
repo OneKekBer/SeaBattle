@@ -58,7 +58,7 @@ namespace EngineNamespace
 
             board.PrintBoard();
 
-            //foreach ((int x, int y) coords in allShipsPositions)
+            //foreach ((int x, int y) coords in allShipsPositions
             //{
             //    Console.WriteLine((coords.x + 1, coords.y + 1));
             //}
