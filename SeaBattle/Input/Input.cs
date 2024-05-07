@@ -31,5 +31,16 @@ namespace SeaBattle.Input.inputHandler
             } while (true);
         }
 
+        public static (int x, int y) GetCoords()
+        {
+            // минус один изза разницы того что массив начинается с 0 
+            // а доска начинается с еденицы
+            int x1 = InputHandler.Input(EnumInputType.X) - 1;
+            int y1 = InputHandler.Input(EnumInputType.Y) - 1;
+
+            return (x1, y1);
+        }
+
+
     }
 }
