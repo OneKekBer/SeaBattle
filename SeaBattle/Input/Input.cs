@@ -20,7 +20,7 @@ namespace SeaBattle.Input.inputHandler
             {
                 Console.WriteLine($"Enter {type}");
                 string userInput = Console.ReadLine();
-                if (int.TryParse(userInput, out int userInt))
+                if (int.TryParse(userInput, out int userInt) && userInt < 9 && userInt > 0)
                 {
                     return userInt;
                 }

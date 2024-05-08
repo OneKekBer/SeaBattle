@@ -27,22 +27,32 @@ namespace EngineNamespace
 
         public void ShootToTtile((int x, int y) coords)
         {
+            
             if (Board.board[coords.y, coords.x] != null)
             {
                 var ship = Board.board[coords.y, coords.x];
-                Console.WriteLine("gotcha");
                 HitShip(ship, coords, Board.board);
                 return;
             }
-            Console.WriteLine("unluck!!!");
+            Console.WriteLine("Miss");
+            Board.board[coords.y, coords.x] = new Ruin();
         }
 
         public void HitShip(Ship ship, (int x, int y) userCoords, Ship[,] board)
         {
+            if(ship is Ruin) 
+            {
+                Console.WriteLine("You already hit this title");
+                return;
+            }
+            Console.WriteLine($"You hit {ship.Name}");
+            ship.AddHit();
+
             if (ship.IsDestroyed)
             {
+                //потом окружить корбаль (x)
+                Console.WriteLine($"Ship {ship.Name} destroyed!!");
             }
-            ship.AddHit();
 
             board[userCoords.y, userCoords.x] = new Ruin();
         }
@@ -58,6 +68,7 @@ namespace EngineNamespace
 
             board.PrintBoard();
 
+            
             //foreach ((int x, int y) coords in allShipsPositions
             //{
             //    Console.WriteLine((coords.x + 1, coords.y + 1));
