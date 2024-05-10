@@ -9,7 +9,7 @@ namespace SeaBattle.Input.inputHandler
 
     public interface IInput
     {
-        public void GetCoordinate();
+        public (int x, int y) GetCoordinates();
     }
 
     public enum EnumInputType
@@ -18,9 +18,9 @@ namespace SeaBattle.Input.inputHandler
         Y = 1,
     }
 
-    public class ConsoleInput
+    public class ConsoleInput : IInput
     {
-        public static int Input(EnumInputType type)
+        public int Input(EnumInputType type)
         {
             do
             {
@@ -37,14 +37,16 @@ namespace SeaBattle.Input.inputHandler
             } while (true);
         }
 
-        public static (int x, int y) GetCoords()
+        public (int x, int y) GetCoordinates()
         {
             // минус один изза разницы того что массив начинается с 0 
             // а доска начинается с еденицы
-            int x1 = InputHandler.Input(EnumInputType.X) - 1;
-            int y1 = InputHandler.Input(EnumInputType.Y) - 1;
+            int x1 = Input(EnumInputType.X) - 1;
+            int y1 = Input(EnumInputType.Y) - 1;
 
-            return (x1, y1);
+            return (y1, x1);
         }
+
+        
     }
 }

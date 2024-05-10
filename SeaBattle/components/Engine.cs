@@ -15,18 +15,19 @@ namespace EngineNamespace
     class Engine
     {
         Board board;
-       
-        public Engine(Board Board)
+        IInput inputHandler;
+
+        public Engine(Board Board, IInput InputHandler)
         {
             //inputHanlder
             board = Board;
+            inputHandler = InputHandler;
         }
-
         // использовать индексаторы с бордой 
 
         public void Turn()
         {
-            (int x, int y) userCoords = InputHandler.GetCoords();
+            (int x, int y) userCoords = inputHandler.GetCoordinates();
             ShootToTtile(userCoords);
             board.PrintBoard();
         }

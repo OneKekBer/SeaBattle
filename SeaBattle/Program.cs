@@ -13,9 +13,9 @@ class Program
     {
         Console.OutputEncoding = Encoding.UTF8;
 
-        IInput inputHandler = 
+        IInput inputHandler = new ConsoleInput();
 
-        Engine engine = new Engine(new Board());
+        Engine engine = new Engine(new Board(), inputHandler);
 
         engine.Start();
     }
