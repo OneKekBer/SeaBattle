@@ -6,13 +6,16 @@ using EngineNamespace;
 using SeaBattle.Input.inputHandler;
 using System.Text;
 
+using BoardNamespace;
 class Program
 {
     public static void Main()
     {
         Console.OutputEncoding = Encoding.UTF8;
 
-        Engine engine = new Engine();
+        IInput inputHandler = 
+
+        Engine engine = new Engine(new Board());
 
         engine.Start();
     }

@@ -11,12 +11,10 @@ namespace SeaBattle.Models
 {
     internal class Cruiser : Ship
     {
-
         public const int cruiserSize = 4;
         public Cruiser() : base(cruiserSize, "Cruiser")
         {
+
         }
-
-
     }
 }

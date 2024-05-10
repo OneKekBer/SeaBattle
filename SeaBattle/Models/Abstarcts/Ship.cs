@@ -4,7 +4,7 @@ namespace SeaBattle.Models.Abstarcts
 {
     public abstract class Ship
     {
-        private int hitCount;
+        public int hitCount { get; private set; }
 
         public string Name { get; init; }
         public int Size { get; init; }
@@ -17,7 +17,6 @@ namespace SeaBattle.Models.Abstarcts
                 return;
             hitCount++;
         }
-
         protected Ship(int size, string name)
         {
             Size = size;

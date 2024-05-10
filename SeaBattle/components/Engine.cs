@@ -12,12 +12,18 @@ using SeaBattle.Components;
 
 namespace EngineNamespace
 {
-
-
     class Engine
     {
-        Board board = new Board();
-        
+        Board board;
+       
+        public Engine(Board Board)
+        {
+            //inputHanlder
+            board = Board;
+        }
+
+        // использовать индексаторы с бордой 
+
         public void Turn()
         {
             (int x, int y) userCoords = InputHandler.GetCoords();
@@ -27,24 +33,27 @@ namespace EngineNamespace
 
         public void ShootToTtile((int x, int y) coords)
         {
-            
-            if (Board.board[coords.y, coords.x] != null)
+            var currentPanel = board[(coords.y, coords.x)];
+
+            if (currentPanel.panelState == PanelState.ContainsShip)
             {
-                var ship = Board.board[coords.y, coords.x];
-                HitShip(ship, coords, Board.board);
+                HitShip(currentPanel, coords);
                 return;
             }
-            Console.WriteLine("Miss");
-            Board.board[coords.y, coords.x] = new Ruin();
+            else if (currentPanel.panelState == PanelState.Empty)
+            {
+                Console.WriteLine("Miss");
+                currentPanel.panelState = PanelState.Shooted;
+            }
+            else
+            {
+                Console.WriteLine("You already shooted at this title!");
+            }
         }
 
-        public void HitShip(Ship ship, (int x, int y) userCoords, Ship[,] board)
+        public void HitShip(Panel currentPanel, (int x, int y) userCoords)
         {
-            if(ship is Ruin) 
-            {
-                Console.WriteLine("You already hit this title");
-                return;
-            }
+            var ship = currentPanel.ship;
             Console.WriteLine($"You hit {ship.Name}");
             ship.AddHit();
 
@@ -53,13 +62,12 @@ namespace EngineNamespace
                 //потом окружить корбаль (x)
                 Console.WriteLine($"Ship {ship.Name} destroyed!!");
             }
-
-            board[userCoords.y, userCoords.x] = new Ruin();
+            currentPanel.panelState = PanelState.Shooted;
         }
 
         public void Start()
         {
-            ShipPlacer shipPlacer = new ShipPlacer(Board.board);
+            ShipPlacer shipPlacer = new ShipPlacer(board);
             board.FillBoard();
 
             shipPlacer.PlaceShip(new Cruiser());
@@ -73,7 +81,6 @@ namespace EngineNamespace
             //{
             //    Console.WriteLine((coords.x + 1, coords.y + 1));
             //}
-
 
             while (true)
             {

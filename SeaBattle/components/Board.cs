@@ -7,11 +7,32 @@ using SeaBattle.Models;
 using SeaBattle.Models.Abstarcts;
 
 
+public enum PanelState
+{
+    Empty = 0,
+    ContainsShip = 1,
+    Shooted = 2
+}
+
 namespace BoardNamespace
 {
+    class Panel 
+    {
+        public PanelState panelState = PanelState.Empty;
+
+        public Ship ship;
+    }
+            
     class Board
     {
-        public static Ship[,] board = new Ship[9, 9];
+        // переделать борду так чтобы это был не Ship[] лучше использовать панели(одна клетка на поле)
+        public Panel[,] board = new Panel[9, 9];
+
+        public Panel this[(int x, int y) coords]
+        {
+            get => board[coords.y, coords.x];
+            set => board[coords.y, coords.x] = value;
+        }
 
         public void FillBoard()
         {
@@ -19,17 +40,15 @@ namespace BoardNamespace
             {
                 for (int j = 0; j < board.GetLength(1); j++)
                 {
-                    board[i, j] = null;
+                    board[i, j] = new Panel();
                 }
             }
         }
 
         public void GetItemOnTitle((int x, int y) coords)
         {
-            Console.WriteLine(board[coords.y - 1, coords.x - 1]);
+            Console.WriteLine(board[coords.y - 1, coords.x - 1].panelState);
         }
-
-        
 
         public void PrintBoard()
         {
@@ -38,12 +57,12 @@ namespace BoardNamespace
             {
                 for(int j = 0; j < board.GetLength(1); j++) 
                 {
-                    if (board[i, j] != null && board[i, j] is Ruin)
+                    if (board[i, j].panelState == PanelState.Shooted)
                     {
                         Console.Write(" x ");
                         continue;
                     }
-                    if (board[i, j] != null)
+                    if (board[i, j].panelState == PanelState.ContainsShip)
                     {
                         Console.Write(" u ");
                         continue;

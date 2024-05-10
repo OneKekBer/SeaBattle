@@ -6,13 +6,19 @@ using System.Threading.Tasks;
 
 namespace SeaBattle.Input.inputHandler
 {
+
+    public interface IInput
+    {
+        public void GetCoordinate();
+    }
+
     public enum EnumInputType
     {
         X = 0,
         Y = 1,
     }
 
-    public class InputHandler
+    public class ConsoleInput
     {
         public static int Input(EnumInputType type)
         {
@@ -40,7 +46,5 @@ namespace SeaBattle.Input.inputHandler
 
             return (x1, y1);
         }
-
-
     }
 }
