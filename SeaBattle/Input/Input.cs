@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SeaBattle.Values;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace SeaBattle.Input.inputHandler
 
     public interface IInput
     {
-        public (int x, int y) GetCoordinates();
+        public Coordinates GetCoordinates();
     }
 
     public enum EnumInputType
@@ -37,14 +38,14 @@ namespace SeaBattle.Input.inputHandler
             } while (true);
         }
 
-        public (int x, int y) GetCoordinates()
+        public Coordinates GetCoordinates()
         {
             // минус один изза разницы того что массив начинается с 0 
             // а доска начинается с еденицы
             int x1 = Input(EnumInputType.X) - 1;
             int y1 = Input(EnumInputType.Y) - 1;
 
-            return (y1, x1);
+            return new Coordinates(x1, y1);
         }
 
         

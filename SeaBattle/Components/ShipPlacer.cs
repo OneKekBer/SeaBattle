@@ -1,6 +1,7 @@
 ﻿using BoardNamespace;
 using SeaBattle.Input.inputHandler;
 using SeaBattle.Models.Abstarcts;
+using SeaBattle.Values;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace SeaBattle.Components
     {
         private Board board;
         Random random = new Random();
-        List<(int x, int y)> allShipsPositions = new List<(int x, int y)>();
+        List<Coordinates> allShipsPositions = new List<Coordinates>();
 
         public ShipPlacer(Board Board)
         {
@@ -95,45 +96,51 @@ namespace SeaBattle.Components
         //    Console.WriteLine("--------------END--------------");
         //}
 
-        public bool IsSmthInCircle((int x, int y) currentCoords)
-        {
-            (int x, int y)[] circle = [(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (-1, 1), (1, -1), (1, 1)];
+        //public bool IsSmthInCircle(Coordinates currentCoords)
+        //{
+        //    (int x, int y)[] circle = [(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (-1, 1), (1, -1), (1, 1)];
 
-            for (int i = 0; i < circle.Length; i++)
-            {
-                (int x, int y) checkCoords = (currentCoords.x + circle[i].x, currentCoords.y + circle[i].y);
-                Console.WriteLine(board[(3, 2)]);
-                try
-                {
-                    if (board[(checkCoords.y, checkCoords.x)].panelState == PanelState.ContainsShip) return true;
-                    continue;
-                }
-                catch
-                {
-                    continue;
-                }
-            }
-            return false;
-        }
+        //    for (int i = 0; i < circle.Length; i++)
+        //    {
+        //        (int x, int y) checkCoords = (currentCoords.x + circle[i].x, currentCoords.y + circle[i].y);
+        //        Console.WriteLine(board[(3, 2)]);
+        //        try
+        //        {
+        //            if (board[(checkCoords.y, checkCoords.x)].panelState == PanelState.ContainsShip) return true;
+        //            continue;
+        //        }
+        //        catch
+        //        {
+        //            continue;
+        //        }
+        //    }
+        //    return false;
+        //}
 
 
         public void PlaceShip(Ship ship)
         {
-            List<(int x, int y)> options = GetShipOptions(ship);
+            List<Coordinates> options = GetShipOptions(ship);
 
-            foreach (var coords in options)
+            foreach (Coordinates coords in options)
             {
                 board[coords].panelState = PanelState.ContainsShip;
                 board[coords].ship = ship;
             }
         }
 
-        public List<(int x, int y)> GetShipOptions(Ship ship)
+        public List<Coordinates> GetShipOptions(Ship ship)
         {
-            (int x, int y)[] directions = { (0, 1), (1, 0), (-1, 0), (0, -1) };//possibile ship directions 
-            var options = new List<(int x, int y)>();
+            Coordinates[] directions = {
+                new Coordinates(0, 1),
+                new Coordinates(1, 0),
+                new Coordinates(-1, 0),
+                new Coordinates(0, -1)
+            };//possibile ship directions 
 
-            (int x, int y) randomCoords = (0, 0);
+            var options = new List<Coordinates>();
+
+            Coordinates randomCoords = new(0, 0);
 
             bool isShipPossibleToPlace = false;
             while (!isShipPossibleToPlace)
@@ -143,8 +150,9 @@ namespace SeaBattle.Components
 
                 //getting random direction
                 int randomDirectionIndex = random.Next(0, directions.Length);
-                (int x, int y) direction = directions[randomDirectionIndex];
-                Console.WriteLine("direction " + direction);
+                Coordinates direction = directions[randomDirectionIndex];
+                var (dirX, dirY) = direction;
+                Console.WriteLine("direction " + dirX + " " + dirY);
 
                 int i = 1;
                 while (true)
@@ -180,13 +188,22 @@ namespace SeaBattle.Components
             return options;
         }
 
-        public bool IsShipAround(List<(int x, int y)> list, (int x, int y) currCoords)
+        public bool IsShipAround(List<Coordinates> list, Coordinates currCoords)
         {
-            (int x, int y)[] circle = [(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (-1, 1), (1, -1), (1, 1)];
+            Coordinates[] circle = [
+                new Coordinates(1, 0),
+                new Coordinates(-1, 0),
+                new Coordinates(0, 1),
+                new Coordinates(0, -1),
+                new Coordinates(1, 1),
+                new Coordinates(-1, 1),
+                new Coordinates(1, -1),
+                new Coordinates(1, 1)
+            ];
 
-            foreach(var coords in circle)
+            foreach(Coordinates coords in circle)
             {
-                (int x, int y) circleCoords = (currCoords.x + coords.x, currCoords.y + coords.y);
+                Coordinates circleCoords = currCoords + coords;
                 if (board[circleCoords].panelState == PanelState.ContainsShip && !list.Contains(circleCoords))
                 {
                     return true;
@@ -195,30 +212,30 @@ namespace SeaBattle.Components
             return false;
         }
 
-        public (int x, int y) GetNextStep((int x, int y) direction, (int x, int y) currentPosition)
+        public Coordinates GetNextStep(Coordinates direction, Coordinates currentPosition)
         {
             return direction switch
             {
-                (0, 1) => (currentPosition.x, currentPosition.y + 1),
-                (1, 0) => (currentPosition.x + 1, currentPosition.y),
-                (-1, 0) => (currentPosition.x - 1, currentPosition.y),
-                (0, -1) => (currentPosition.x, currentPosition.y - 1),
+                (0, 1) => new Coordinates(currentPosition.x, currentPosition.y + 1),
+                (1, 0) => new Coordinates(currentPosition.x + 1, currentPosition.y),
+                (-1, 0) => new Coordinates(currentPosition.x - 1, currentPosition.y),
+                (0, -1) => new Coordinates(currentPosition.x, currentPosition.y - 1),
                 _ => throw new Exception("bad random direction")
             };
         }
 
-        private ref (int x, int y) GenerateNewCoords(ref (int x, int y) oldCoords)
+        private ref Coordinates GenerateNewCoords(ref Coordinates oldCoords)
         {
-            oldCoords = (random.Next(0, board.board.GetLength(0)), random.Next(0, board.board.GetLength(0)));
+            oldCoords = new Coordinates(random.Next(0, board.board.GetLength(0)), random.Next(0, board.board.GetLength(0)));
             return ref oldCoords;
         }
 
-        private void ClearCache(List<(int x, int y)> cache)
+        private void ClearCache(List<Coordinates> cache)
         {
-            foreach (var cords in cache)
+            foreach (Coordinates cords in cache)
             {
-                board[(cords.y, cords.x)].panelState = PanelState.Empty;
-                board[(cords.y, cords.x)].ship = null;
+                board[cords].panelState = PanelState.Empty;
+                board[cords].ship = null;
             }
             cache.Clear();
         }

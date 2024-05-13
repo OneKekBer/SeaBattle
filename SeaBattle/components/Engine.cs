@@ -9,6 +9,7 @@ using SeaBattle.Input.inputHandler;
 using SeaBattle.Models.Abstarcts;
 using SeaBattle.Models;
 using SeaBattle.Components;
+using SeaBattle.Values;
 
 namespace EngineNamespace
 {
@@ -27,14 +28,14 @@ namespace EngineNamespace
 
         public void Turn()
         {
-            (int x, int y) userCoords = inputHandler.GetCoordinates();
+            Coordinates userCoords = inputHandler.GetCoordinates();
             ShootToTtile(userCoords);
             board.PrintBoard();
         }
 
-        public void ShootToTtile((int x, int y) coords)
+        public void ShootToTtile(Coordinates coords)
         {
-            var currentPanel = board[(coords.y, coords.x)];
+            var currentPanel = board[coords];
 
             if (currentPanel.panelState == PanelState.ContainsShip)
             {
@@ -52,7 +53,7 @@ namespace EngineNamespace
             }
         }
 
-        public void HitShip(Panel currentPanel, (int x, int y) userCoords)
+        public void HitShip(Panel currentPanel, Coordinates userCoords)
         {
             var ship = currentPanel.ship;
             Console.WriteLine($"You hit {ship.Name}");

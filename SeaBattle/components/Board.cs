@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SeaBattle.Models;
 using SeaBattle.Models.Abstarcts;
-
+using SeaBattle.Values;
 
 public enum PanelState
 {
@@ -28,7 +28,7 @@ namespace BoardNamespace
         // переделать борду так чтобы это был не Ship[] лучше использовать панели(одна клетка на поле)
         public Panel[,] board = new Panel[9, 9];
 
-        public Panel this[(int x, int y) coords]
+        public Panel this[Coordinates coords]
         {
             get => board[coords.y, coords.x];
             set => board[coords.y, coords.x] = value;
@@ -45,7 +45,7 @@ namespace BoardNamespace
             }
         }
 
-        public void GetItemOnTitle((int x, int y) coords)
+        public void GetItemOnTitle(Coordinates coords)
         {
             Console.WriteLine(board[coords.y - 1, coords.x - 1].panelState);
         }
