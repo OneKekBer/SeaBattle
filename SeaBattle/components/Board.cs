@@ -11,27 +11,43 @@ public enum PanelState
 {
     Empty = 0,
     ContainsShip = 1,
-    Shooted = 2
+    Shooted = 2,
+    Miss = 3
 }
 
 namespace BoardNamespace
 {
-    class Panel 
+    public class Panel 
     {
-        public PanelState panelState = PanelState.Empty;
+        public PanelState panelState { get; private set; } = PanelState.Empty;
+        public Ship Ship { get; set; } 
 
-        public Ship ship;
+        public void PlaceShip(Ship ship)
+        {
+            if (Ship is not null) 
+                throw new Exception("");
+            panelState = PanelState.ContainsShip;
+            Ship = ship;
+        }
+
+        public void RegisterShot()
+        {
+            if(Ship is not null)
+                panelState = PanelState.Shooted;
+            else 
+                panelState = PanelState.Miss;
+        }
     }
-            
-    class Board
+
+    public class Board
     {
         // переделать борду так чтобы это был не Ship[] лучше использовать панели(одна клетка на поле)
         public Panel[,] board = new Panel[9, 9];
 
         public Panel this[Coordinates coords]
         {
-            get => board[coords.y, coords.x];
-            set => board[coords.y, coords.x] = value;
+            get => board[coords.Y, coords.X];
+            set => board[coords.Y, coords.X] = value;
         }
 
         public void FillBoard()
@@ -47,7 +63,7 @@ namespace BoardNamespace
 
         public void GetItemOnTitle(Coordinates coords)
         {
-            Console.WriteLine(board[coords.y - 1, coords.x - 1].panelState);
+            Console.WriteLine(board[coords.Y - 1, coords.X - 1].panelState);
         }
 
         public void PrintBoard()

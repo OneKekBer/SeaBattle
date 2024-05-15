@@ -13,7 +13,7 @@ using SeaBattle.Values;
 
 namespace EngineNamespace
 {
-    class Engine
+    public class Engine
     {
         Board board;
         IInput inputHandler;
@@ -45,7 +45,8 @@ namespace EngineNamespace
             else if (currentPanel.panelState == PanelState.Empty)
             {
                 Console.WriteLine("Miss");
-                currentPanel.panelState = PanelState.Shooted;
+                currentPanel.RegisterShot();
+
             }
             else
             {
@@ -55,7 +56,7 @@ namespace EngineNamespace
 
         public void HitShip(Panel currentPanel, Coordinates userCoords)
         {
-            var ship = currentPanel.ship;
+            var ship = currentPanel.Ship;
             Console.WriteLine($"You hit {ship.Name}");
             ship.AddHit();
 
@@ -64,7 +65,7 @@ namespace EngineNamespace
                 //потом окружить корбаль (x)
                 Console.WriteLine($"Ship {ship.Name} destroyed!!");
             }
-            currentPanel.panelState = PanelState.Shooted;
+            currentPanel.RegisterShot();
         }
 
         public void Start()

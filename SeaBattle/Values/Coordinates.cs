@@ -7,22 +7,10 @@ using System.Xml.Linq;
 
 namespace SeaBattle.Values;
 
-public readonly struct Coordinates
+public readonly record struct Coordinates(int X, int Y)
 {
-    public int x { get; init; }
-    public int y { get; init; }
-
-    public Coordinates(int X, int Y)
-    {
-        x = X;
-        y = Y;
-    }
-
     public static Coordinates operator +(Coordinates coord1, Coordinates coord2)
     {
-        return new Coordinates(coord1.x + coord2.x, coord1.y + coord2.y);
+        return new Coordinates(coord1.X + coord2.X, coord1.Y + coord2.Y);
     }
-
-    public void Deconstruct(out int X, out int Y) => (X, Y) = (x, y);
-
 }

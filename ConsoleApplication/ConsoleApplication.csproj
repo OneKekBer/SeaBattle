@@ -8,8 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Input\" />
     <Folder Include="Output\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SeaBattle\SeaBattle.csproj" />
   </ItemGroup>
 
 </Project>
