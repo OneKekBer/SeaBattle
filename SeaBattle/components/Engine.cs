@@ -10,6 +10,7 @@ using SeaBattle.Models.Abstarcts;
 using SeaBattle.Models;
 using SeaBattle.Components;
 using SeaBattle.Values;
+using SeaBattle.Output;
 
 namespace EngineNamespace
 {
@@ -17,12 +18,15 @@ namespace EngineNamespace
     {
         Board board;
         IInput inputHandler;
+        IOutput outputHandler;
 
-        public Engine(Board Board, IInput InputHandler)
+
+        public Engine(Board Board, IInput InputHandler, IOutput OutputHandler)
         {
             //inputHanlder
             board = Board;
             inputHandler = InputHandler;
+            outputHandler = OutputHandler;
         }
         // использовать индексаторы с бордой 
 
@@ -30,7 +34,7 @@ namespace EngineNamespace
         {
             Coordinates userCoords = inputHandler.GetCoordinates();
             ShootToTtile(userCoords);
-            board.PrintBoard();
+            outputHandler.DisplayBoard();
         }
 
         public void ShootToTtile(Coordinates coords)
@@ -77,9 +81,8 @@ namespace EngineNamespace
             shipPlacer.PlaceShip(new Cruiser());
             shipPlacer.PlaceShip(new Cruiser());
 
-            board.PrintBoard();
-
-            
+            outputHandler.DisplayBoard();
+          
             //foreach ((int x, int y) coords in allShipsPositions
             //{
             //    Console.WriteLine((coords.x + 1, coords.y + 1));

@@ -2,8 +2,10 @@
 
 using BoardNamespace;
 using ConsoleApplication.Input;
+using ConsoleApplication.Output;
 using EngineNamespace;
 using SeaBattle.Input.inputHandler;
+using SeaBattle.Output;
 using System.Text;
 
 public class Program
@@ -12,9 +14,12 @@ public class Program
     {
         Console.OutputEncoding = Encoding.UTF8;
 
-        IInput inputHandler = new ConsoleInput();
+        Board board = new Board();
 
-        Engine engine = new Engine(new Board(), inputHandler);
+        IInput inputHandler = new ConsoleInput();
+        IOutput outputHandler = new ConsoleOutput(board);
+    
+        Engine engine = new Engine(board, inputHandler, outputHandler);
 
         engine.Start();
     }

@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Output\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SeaBattle\SeaBattle.csproj" />
   </ItemGroup>
 
