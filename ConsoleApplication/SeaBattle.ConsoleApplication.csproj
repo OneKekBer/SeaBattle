@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SeaBattle\SeaBattle.csproj" />
+    <ProjectReference Include="..\SeaBattle\SeaBattle.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -23,21 +23,20 @@ namespace EngineNamespace
 
         public Engine(Board Board, IInput InputHandler, IOutput OutputHandler)
         {
-            //inputHanlder
             board = Board;
             inputHandler = InputHandler;
             outputHandler = OutputHandler;
         }
         // использовать индексаторы с бордой 
 
-        public void Turn()
+        private void Turn()
         {
             Coordinates userCoords = inputHandler.GetCoordinates();
             ShootToTtile(userCoords);
             outputHandler.DisplayBoard();
         }
 
-        public void ShootToTtile(Coordinates coords)
+        private void ShootToTtile(Coordinates coords)
         {
             var currentPanel = board[coords];
 
@@ -50,7 +49,6 @@ namespace EngineNamespace
             {
                 Console.WriteLine("Miss");
                 currentPanel.RegisterShot();
-
             }
             else
             {
@@ -58,7 +56,7 @@ namespace EngineNamespace
             }
         }
 
-        public void HitShip(Panel currentPanel, Coordinates userCoords)
+        private void HitShip(Panel currentPanel, Coordinates userCoords)
         {
             var ship = currentPanel.Ship;
             Console.WriteLine($"You hit {ship.Name}");
@@ -83,17 +81,10 @@ namespace EngineNamespace
 
             outputHandler.DisplayBoard();
           
-            //foreach ((int x, int y) coords in allShipsPositions
-            //{
-            //    Console.WriteLine((coords.x + 1, coords.y + 1));
-            //}
-
             while (true)
             {
                 Turn();
             }
-
         }
-
     }
 }
