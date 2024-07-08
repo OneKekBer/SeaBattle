@@ -149,7 +149,7 @@ namespace SeaBattle.Components
                 int randomDirectionIndex = random.Next(0, directions.Length);
                 Coordinates direction = directions[randomDirectionIndex];
                 var (dirX, dirY) = direction;
-                Console.WriteLine("direction " + dirX + " " + dirY);
+                //Console.WriteLine("direction " + dirX + " " + dirY);
 
                 int i = 1;
                 while (true)
@@ -171,7 +171,7 @@ namespace SeaBattle.Components
                             throw new Exception("impossible to place ship");
 
                         options.Add(nextCoords);
-                        Console.WriteLine("next coords " + nextCoords);
+                        //Console.WriteLine("next coords " + nextCoords);
                         i++;
                     }
                     catch

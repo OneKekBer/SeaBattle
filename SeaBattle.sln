@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeaBattle.Core", "SeaBattle
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeaBattle.ConsoleApplication", "ConsoleApplication\SeaBattle.ConsoleApplication.csproj", "{666D6C72-777A-4CD0-915C-F2DB548F1B88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeaBattle.WebApplication", "SeaBattle.WebApplication\SeaBattle.WebApplication.csproj", "{9DF8E8D6-2AA9-4581-B6C5-34CA160B8F49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeaBattle.API", "SeaBattle.WebApplication\SeaBattle.API.csproj", "{9DF8E8D6-2AA9-4581-B6C5-34CA160B8F49}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "SeaBattle.Client", "SeaBattle.Client\SeaBattle.Client.esproj", "{93DCC42B-1D84-4615-B743-7ECF1AD4E040}"
 EndProject

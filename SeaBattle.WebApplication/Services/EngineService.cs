@@ -10,7 +10,7 @@ namespace SeaBattle.WebApplication.Services
     {
         public void DisplayBoard()
         {
-            throw new NotImplementedException();
+            return;
         }
     }
 
@@ -18,18 +18,36 @@ namespace SeaBattle.WebApplication.Services
     {
         public Coordinates GetCoordinates()
         {
-            throw new NotImplementedException();
+            return new Coordinates(2,3);
         }
     }
 
 
     public class EngineService
     {
-        static Board board = new Board();
-        static Output outputHandler = new Output();
-        static Input inputHandler = new Input();
+        public Board board { get; init; }
+        Output outputHandler { get; init; }
+        Input inputHandler { get; init; }
 
+        public Engine engine;
 
-        public Engine engine = new Engine(board, inputHandler, outputHandler);
+        public EngineService()
+        {
+            board = new Board();
+            outputHandler = new Output();
+            inputHandler = new Input();
+            engine = new Engine(board, inputHandler, outputHandler);
+        }
+
+        public void StartEngine()
+        {
+            engine.Start();
+        }
+
+        public Panel[,] GetBoard()
+        {
+            return board.board;
+        }
+
     }
 }
