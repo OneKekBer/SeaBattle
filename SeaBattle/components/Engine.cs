@@ -8,15 +8,20 @@ namespace EngineNamespace
 {
     public class Engine
     {
-        private readonly Board _board;
-        private readonly IInput _inputHandler;
-        private readonly IOutput _outputHandler;
+        private Board _board;
+        private IInput _inputHandler;
+        private IOutput _outputHandler;
 
         public Engine(Board board, IInput inputHandler, IOutput outputHandler)
         {
             _board = board;
             _inputHandler = inputHandler;
             _outputHandler = outputHandler;
+        }
+
+        public void SetInputHandler(IInput inputHandler)
+        {
+            _inputHandler = inputHandler;
         }
 
         private void HitShip(Panel currentPanel, Coordinates userCoords)
@@ -32,7 +37,7 @@ namespace EngineNamespace
             currentPanel.RegisterShot();
         }
 
-        private void ShootToTtile(Coordinates coords)
+        public void ShootToTtile(Coordinates coords)
         {
             var currentPanel = _board[coords];
 
@@ -74,7 +79,6 @@ namespace EngineNamespace
         public void Start()
         {
             _board.FillBoard();
-            PlaceShips();
         }
     }
 }
