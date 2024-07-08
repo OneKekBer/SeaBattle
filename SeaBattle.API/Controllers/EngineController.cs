@@ -6,6 +6,8 @@ using SeaBattle.Engine.Interfaces;
 using SeaBattle.Values;
 using SeaBattle.API.Infrastructure;
 using Microsoft.AspNetCore.Cors;
+using SeaBattle.API.Services;
+using SeaBattle.API.Domains.Engine.Models;
 
 namespace WebApp.Controllers
 {
@@ -14,36 +16,40 @@ namespace WebApp.Controllers
     [EnableCors("AllowSpecificOrigin")]
     public class GameController : ControllerBase
     {
-        private readonly Board _board = new Board();
-        private readonly Engine _engine;
+        private readonly EngineService _engineService;
         private readonly ILogger<GameController> _logger;
 
-        public GameController(ILogger<GameController> logger)
+        public GameController(ILogger<GameController> logger, EngineService engine)
         {
+            _engineService = engine;
             _logger = logger;
-            var outputHandler = new WebOutput(_board.board);
-            _engine = new Engine(_board, null, outputHandler);
-            _engine.Start();
-            _engine.PlaceShips();
+            
         }
 
         [HttpPost("shoot")]
-        public async Task<IActionResult> Shoot([FromBody] Coordinates coords)
+        public async Task<IActionResult> Shoot([FromBody] CoordinateDTO coords)
         {
-            var inputHandler = new WebInput(coords);
-            _engine.SetInputHandler(inputHandler); // Добавьте метод SetInputHandler в Engine
+            var inputHandler = new WebInput(new Coordinates(coords.x, coords.y));
+            _engineService.engine.SetInputHandler(inputHandler); // Добавьте метод SetInputHandler в Engine
 
-            await _engine.GetCoordinatesAsync();
+            await _engineService.engine.GetCoordinatesAsync();
+            return Ok();
+        }
+
+        [HttpGet("restart")]
+        public IActionResult RestartGame()
+        {
+            _engineService.RestartGame();
             return Ok();
         }
 
         [HttpGet("board")]
         public IActionResult GetBoard()
         {
-            _logger.LogInformation(ConvertBoardIntoArray.ConvertBoardToArray(_board.board));
+            _logger.LogInformation(ConvertBoardIntoArray.ConvertBoardToArray(_engineService.board.board));
             return Ok(new
             {
-                board = ConvertBoardIntoArray.ConvertBoardToArray(_board.board),
+                board = ConvertBoardIntoArray.ConvertBoardToArray(_engineService.board.board),
             });
         }
     }

@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Domains\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SeaBattle\SeaBattle.Engine.csproj" />
   </ItemGroup>
 

@@ -67,6 +67,12 @@ namespace EngineNamespace
             ShootToTtile(userCoords);
         }
 
+        public void Restart()
+        {
+            Start();
+            PlaceShips();
+        }
+
         public void PlaceShips()
         {
             ShipPlacer shipPlacer = new ShipPlacer(_board);
