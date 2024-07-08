@@ -1,4 +1,5 @@
-﻿using SeaBattle.Input.inputHandler;
+﻿
+using SeaBattle.Engine.Interfaces;
 using SeaBattle.Values;
 using System;
 using System.Collections.Generic;
@@ -17,14 +18,14 @@ namespace ConsoleApplication.Input
 
     internal class ConsoleInput : IInput
     {
-        public Coordinates GetCoordinates()
+        public Task<Coordinates> GetCoordinatesAsync()
         {
             // минус один изза разницы того что массив начинается с 0 
             // а доска начинается с еденицы
             int x1 = Input(EnumInputType.X) - 1;
             int y1 = Input(EnumInputType.Y) - 1;
 
-            return new Coordinates(x1, y1);
+            return Task.FromResult(new Coordinates(x1, y1));
         }
 
         public int Input(EnumInputType type)
@@ -43,5 +44,7 @@ namespace ConsoleApplication.Input
                 }
             } while (true);
         }
+
+        
     }
 }

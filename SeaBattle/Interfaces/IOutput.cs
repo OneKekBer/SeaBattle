@@ -1,10 +1,11 @@
-﻿using System;
+﻿using BoardNamespace;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SeaBattle.Output
+namespace SeaBattle.Engine.Interfaces
 {
     public interface IOutput
     {
