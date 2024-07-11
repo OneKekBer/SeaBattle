@@ -222,7 +222,7 @@ namespace SeaBattle.Components
             };
         }
 
-        private Coordinates GenerateNewCoords()
+        private Coordinates GenerateNewCoords() 
         {
             return new Coordinates(random.Next(0, board.board.GetLength(0)), random.Next(0, board.board.GetLength(0)));
         }

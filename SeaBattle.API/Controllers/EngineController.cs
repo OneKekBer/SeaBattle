@@ -8,6 +8,7 @@ using SeaBattle.API.Infrastructure;
 using Microsoft.AspNetCore.Cors;
 using SeaBattle.API.Services;
 using SeaBattle.API.Domains.Engine.Models;
+using SeaBattle.API.Controllers;
 
 namespace WebApp.Controllers
 {
@@ -47,6 +48,7 @@ namespace WebApp.Controllers
         public IActionResult GetBoard()
         {
             _logger.LogInformation(ConvertBoardIntoArray.ConvertBoardToArray(_engineService.board.board));
+
             return Ok(new
             {
                 board = ConvertBoardIntoArray.ConvertBoardToArray(_engineService.board.board),
@@ -54,33 +56,5 @@ namespace WebApp.Controllers
         }
     }
 
-    public class WebInput : IInput
-    {
-        private Coordinates _coords;
-
-        public WebInput(Coordinates coords)
-        {
-            _coords = coords;
-        }
-
-        public Task<Coordinates> GetCoordinatesAsync()
-        {
-            return Task.FromResult(_coords);
-        }
-    }
-
-    public class WebOutput : IOutput
-    {
-        private readonly Panel[,] _board;
-
-        public WebOutput(Panel[,] board)
-        {
-            _board = board;
-        }
-
-        public void DisplayBoard()
-        {
-            return;
-        }
-    }
+     
 }

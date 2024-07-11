@@ -55,7 +55,7 @@ const App = () => {
 	}
 
 	return (
-		<div className='flex justify-center items-center w-screen'>
+		<div className='flex items-center justify-center w-screen'>
 			<button onClick={HandleStart}>restart</button>
 			{board.length != 0 ? (
 				<div>
@@ -66,12 +66,12 @@ const App = () => {
 									className={`w-[60px] h-[60px] border border-gray-400 cursor-pointer
                               ${
 											cell == 'Empty'
-												? 'bg-slate-300'
+												? 'bg-slate-200'
 												: cell == 'Miss'
 												? 'bg-yellow-300'
 												: cell == 'Shooted'
 												? 'bg-red-300'
-												: 'bg-slate-300'
+												: 'bg-slate-200'
 										}
                                text-black flex items-center justify-center border`}
 									key={cellIndex}
