@@ -63,14 +63,14 @@ const App = () => {
 						<div key={rowIndex} className='flex'>
 							{row.map((cell, cellIndex) => (
 								<span
-									className={`w-[60px] h-[60px] border border-gray-400 cursor-pointer
+									className={`w-[50px] h-[50px] border border-gray-400 cursor-pointer
                               ${
 											cell == 'Empty'
 												? 'bg-slate-200'
 												: cell == 'Miss'
-												? 'bg-yellow-300'
+												? 'bg-yellow-200'
 												: cell == 'Shooted'
-												? 'bg-red-300'
+												? 'bg-red-500'
 												: 'bg-slate-200'
 										}
                                text-black flex items-center justify-center border`}
