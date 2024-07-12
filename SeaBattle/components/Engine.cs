@@ -19,11 +19,6 @@ namespace EngineNamespace
             _outputHandler = outputHandler;
         }
 
-        public void SetInputHandler(IInput inputHandler)
-        {
-            _inputHandler = inputHandler;
-        }
-
         private void HitShip(Panel currentPanel, Coordinates userCoords)
         {
             var ship = currentPanel.Ship;
@@ -65,7 +60,7 @@ namespace EngineNamespace
             _outputHandler.DisplayBoard();
         }
 
-        public async Task<PanelState> GetCoordinatesAsync()
+        public async Task<PanelState> HandleSendingCoordiantesAsync()
         {
             Coordinates userCoords = await _inputHandler.GetCoordinatesAsync();
             PanelState panelStateAfterShoot = ShootToTtile(userCoords);
@@ -74,7 +69,7 @@ namespace EngineNamespace
 
         public void Restart()
         {
-            Start();
+            _board.FillBoard();
             PlaceShips();
         }
 
@@ -85,11 +80,6 @@ namespace EngineNamespace
             shipPlacer.PlaceShip(new Cruiser());
             shipPlacer.PlaceShip(new Cruiser());
             shipPlacer.PlaceShip(new Cruiser());
-        }
-
-        public void Start()
-        {
-            _board.FillBoard();
         }
     }
 }

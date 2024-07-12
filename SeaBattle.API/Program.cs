@@ -5,8 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddLogging();
-builder.Services.AddSingleton<EngineService>();
-//builder.Services.AddScoped<WebInput>();
+builder.Services.AddSingleton<GameLogicService>();
+builder.Services.AddSingleton<WebInput>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
