@@ -37,22 +37,26 @@ namespace EngineNamespace
             currentPanel.RegisterShot();
         }
 
-        public void ShootToTtile(Coordinates coords)
+        public PanelState ShootToTtile(Coordinates coords)
         {
             var currentPanel = _board[coords];
 
             if (currentPanel.PanelState == PanelState.ContainsShip)
             {
                 HitShip(currentPanel, coords);
+                return PanelState.Shooted;
             }
             else if (currentPanel.PanelState == PanelState.Empty)
             {
+
                 Console.WriteLine("Miss");
                 currentPanel.RegisterShot();
+                return PanelState.Miss;
             }
             else
             {
                 Console.WriteLine("You already shot at this tile!");
+                return currentPanel.PanelState; //potential error place
             }
         }
 
@@ -61,10 +65,11 @@ namespace EngineNamespace
             _outputHandler.DisplayBoard();
         }
 
-        public async Task GetCoordinatesAsync()
+        public async Task<PanelState> GetCoordinatesAsync()
         {
             Coordinates userCoords = await _inputHandler.GetCoordinatesAsync();
-            ShootToTtile(userCoords);
+            PanelState panelStateAfterShoot = ShootToTtile(userCoords);
+            return panelStateAfterShoot;
         }
 
         public void Restart()

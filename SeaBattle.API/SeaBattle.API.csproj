@@ -10,4 +10,8 @@
     <ProjectReference Include="..\SeaBattle\SeaBattle.Engine.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Infrastructure\" />
+  </ItemGroup>
+
 </Project>

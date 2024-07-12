@@ -11,10 +11,12 @@ namespace SeaBattle.API.Services
     {
         public readonly Board board = new Board();
         public readonly EngineNamespace.Engine engine;
+        //public readonly WebInput _webInput;
 
         public EngineService()
         {
             var outputHandler = new WebOutput();
+            //_webInput = webInput;
             engine = new EngineNamespace.Engine(board, null, outputHandler);
             engine.Start();
             engine.PlaceShips();
