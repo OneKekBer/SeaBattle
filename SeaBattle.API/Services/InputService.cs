@@ -7,7 +7,7 @@ namespace SeaBattle.API.Services
     {
         private Coordinates _coords;
 
-        public WebInput(Coordinates coords)
+        public async Task GetCoordinatesFromController(Coordinates coords)
         {
             _coords = coords;
         }

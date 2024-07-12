@@ -16,23 +16,21 @@ namespace WebApp.Controllers
     [EnableCors("AllowSpecificOrigin")]
     public class GameController : ControllerBase
     {
-        private readonly EngineService _engineService;
+        private readonly GameLogicService _gameLogicService;
         private readonly ILogger<GameController> _logger;
 
-        public GameController(EngineService engine, ILogger<GameController> logger)
+        public GameController(GameLogicService engine, ILogger<GameController> logger)
         {
-            _engineService = engine;
+            _gameLogicService = engine;
             _logger = logger;
-            
         }
 
         [HttpPost("shoot")]
         public async Task<IActionResult> Shoot([FromBody] CoordinateDTO coords)
         {
-            var inputHandler = new WebInput(new Coordinates(coords.x, coords.y));
-            _engineService.engine.SetInputHandler(inputHandler); // Добавьте метод SetInputHandler в Engine
+            await _gameLogicService.SendCoordsToWebInput(new Coordinates(coords.x, coords.y));
 
-            PanelState panelStateAfterShoot = await _engineService.engine.GetCoordinatesAsync();
+            PanelState panelStateAfterShoot = await _gameLogicService.engine.HandleSendingCoordiantesAsync();
             return Ok(new   
             {
                 state = panelStateAfterShoot.ToString() // logic of board was rebuilded,
@@ -43,7 +41,7 @@ namespace WebApp.Controllers
         [HttpPut("restart")]
         public IActionResult RestartGame()
         {
-            _engineService.RestartGame();
+            _gameLogicService.RestartGame();
             return Ok();
         }
     }

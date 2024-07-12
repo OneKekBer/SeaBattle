@@ -7,7 +7,7 @@ const App = () => {
 		board: 'Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty ContainsShip Empty Empty Empty Empty Empty ContainsShip Empty Empty ContainsShip Empty Empty Empty Empty Empty ContainsShip Empty Empty ContainsShip Empty Empty Empty Empty Empty ContainsShip Empty Empty ContainsShip Empty Empty Empty Empty Empty ContainsShip Empty Empty Empty Empty Empty Empty Empty Empty Empty ContainsShip ContainsShip ContainsShip ContainsShip Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty ',
 	})
 
-	const HandleStart = async () => {
+	const HandleReStart = async () => {
 		try {
 			// Log the clicked coordinates (adjusting for 1-based index)
 
@@ -29,9 +29,11 @@ const App = () => {
 		}
 	}
 
+	const
+
 	return (
 		<div className='flex items-center justify-center w-screen'>
-			<button onClick={HandleStart}>restart</button>
+			<button onClick={HandleReStart}>start</button>
 			{board.length != 0 ? (
 				<div>
 					{board.map((row, rowIndex) => (
