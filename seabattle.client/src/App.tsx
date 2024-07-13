@@ -1,30 +1,14 @@
 import { v4 as uuidv4 } from 'uuid'
 import Panel from './components/Panel'
 import { convertStringToArray } from './helpers/Converter'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 const App = () => {
 	const board = convertStringToArray({
 		board: 'Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty ContainsShip Empty Empty Empty Empty Empty ContainsShip Empty Empty ContainsShip Empty Empty Empty Empty Empty ContainsShip Empty Empty ContainsShip Empty Empty Empty Empty Empty ContainsShip Empty Empty ContainsShip Empty Empty Empty Empty Empty ContainsShip Empty Empty Empty Empty Empty Empty Empty Empty Empty ContainsShip ContainsShip ContainsShip ContainsShip Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty Empty ',
 	})
-	const [isStartButtonPressed, setIsStartButtonPressed] = useState(false)
+	// const [isStartButtonPressed, setIsStartButtonPressed] = useState(false)
 
-	const HandleRestart = async () => {
-		try {
-			const res = await fetch(`${import.meta.env.VITE_API_URL}restart`, {
-				method: 'PUT',
-			})
-
-			if (!res.ok) {
-				throw new Error('Problem with fetch shoot')
-			}
-
-			window.location.reload()
-		} catch (error) {
-			console.error('Error handling plate click:', error)
-			// Handle errors, such as displaying an error message or logging
-		}
-	}
 	const HandleStart = async () => {
 		try {
 			const res = await fetch(`${import.meta.env.VITE_API_URL}start`, {
@@ -34,7 +18,7 @@ const App = () => {
 			if (!res.ok) {
 				throw new Error('Problem with fetch shoot')
 			}
-			setIsStartButtonPressed(true)
+			// setIsStartButtonPressed(true)
 		} catch (error) {
 			console.error('Error handling plate click:', error)
 			// Handle errors, such as displaying an error message or logging
@@ -43,6 +27,7 @@ const App = () => {
 
 	useEffect(() => {
 		console.log('useeffect works')
+		HandleStart()
 	}, [])
 
 	return (
@@ -54,16 +39,22 @@ const App = () => {
 			</h2>
 			<div className='flex flex-col items-center justify-center w-screen'>
 				<div className='flex'>
-					<button className='' onClick={HandleRestart}>
+					<button
+						className=''
+						onClick={() => {
+							window.location.reload()
+							HandleStart()
+						}}
+					>
 						restart
 					</button>
-					<button
+					{/* <button
 						className=''
 						disabled={isStartButtonPressed}
 						onClick={HandleStart}
 					>
 						start
-					</button>
+					</button> */}
 				</div>
 				{board.length != 0 ? (
 					<div>

@@ -67,12 +67,6 @@ namespace EngineNamespace
             return panelStateAfterShoot;
         }
 
-        public void Restart()
-        {
-            _board.FillBoard();
-            PlaceShips();
-        }
-
         public void Start()
         {
             _board.FillBoard();

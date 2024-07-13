@@ -38,19 +38,13 @@ namespace WebApp.Controllers
             });
         }
 
-        //[HttpPut("start")]
-        //public IActionResult StartGame()
-        //{
-        //    _gameLogicService.StartGame();
-        //    return Ok();
-        //}
-
-        [HttpPut("restart")]
-        public IActionResult RestartGame()
+        [HttpPut("start")]
+        public IActionResult StartGame()
         {
-            _gameLogicService.RestartGame();
+            _gameLogicService.StartGame();
             return Ok();
         }
+
     }
 
      
