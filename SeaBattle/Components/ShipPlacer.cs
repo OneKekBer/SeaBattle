@@ -1,5 +1,4 @@
 ﻿using BoardNamespace;
-using SeaBattle.Input.inputHandler;
 using SeaBattle.Models.Abstarcts;
 using SeaBattle.Values;
 using System;
@@ -162,7 +161,7 @@ namespace SeaBattle.Components
                             break;
                         }
 
-                        if (board[options.Last()].panelState == PanelState.ContainsShip)
+                        if (board[options.Last()].PanelState == PanelState.ContainsShip)
                             throw new Exception("impossible to place ship");
 
                         var nextCoords = GetNextStep(direction, options.Last());
@@ -174,8 +173,9 @@ namespace SeaBattle.Components
                         Console.WriteLine("next coords " + nextCoords);
                         i++;
                     }
-                    catch
+                    catch (Exception e)
                     {
+                        Console.WriteLine(e.Message);
                         options.Clear();
                         i = 1;
                         break;
@@ -203,8 +203,9 @@ namespace SeaBattle.Components
             {
                 Coordinates circleCoords = currCoords + coords;
                 if (circleCoords == lastOption) continue;
-                if (board[circleCoords].panelState == PanelState.ContainsShip)
+                if (board[circleCoords].PanelState == PanelState.ContainsShip)
                 {
+                    Console.WriteLine(board[circleCoords].PanelState);
                     return true;
                 }
             }
@@ -223,7 +224,7 @@ namespace SeaBattle.Components
             };
         }
 
-        private Coordinates GenerateNewCoords()
+        private Coordinates GenerateNewCoords() 
         {
             return new Coordinates(random.Next(0, board.board.GetLength(0)), random.Next(0, board.board.GetLength(0)));
         }

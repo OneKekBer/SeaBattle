@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SeaBattle.Input.inputHandler
+namespace SeaBattle.Engine.Interfaces
 {
     public interface IInput
     {
-        public Coordinates GetCoordinates();
+        public Task<Coordinates> GetCoordinatesAsync();
     }
 }

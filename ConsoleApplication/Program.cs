@@ -4,8 +4,8 @@ using BoardNamespace;
 using ConsoleApplication.Input;
 using ConsoleApplication.Output;
 using EngineNamespace;
-using SeaBattle.Input.inputHandler;
-using SeaBattle.Output;
+using SeaBattle.Engine.Interfaces;
+using SeaBattle.Values;
 using System.Text;
 
 public class Program
@@ -22,5 +22,11 @@ public class Program
         Engine engine = new Engine(board, inputHandler, outputHandler);
 
         engine.Start();
+        
+        while (true)
+        {
+            engine.DisplayBoard();
+            engine.GetCoordinatesAsync();
+        }
     }
 }

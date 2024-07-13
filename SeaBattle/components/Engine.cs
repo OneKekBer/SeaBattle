@@ -1,64 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using BoardNamespace;
-using SeaBattle.Input.inputHandler;
-using SeaBattle.Models.Abstarcts;
-using SeaBattle.Models;
+﻿using BoardNamespace;
 using SeaBattle.Components;
+using SeaBattle.Engine.Interfaces;
+using SeaBattle.Models;
 using SeaBattle.Values;
-using SeaBattle.Output;
 
 namespace EngineNamespace
 {
     public class Engine
     {
-        Board board;
-        IInput inputHandler;
-        IOutput outputHandler;
+        private Board _board;
+        private IInput _inputHandler;
+        private IOutput _outputHandler;
 
-
-        public Engine(Board Board, IInput InputHandler, IOutput OutputHandler)
+        public Engine(Board board, IInput inputHandler, IOutput outputHandler)
         {
-            //inputHanlder
-            board = Board;
-            inputHandler = InputHandler;
-            outputHandler = OutputHandler;
-        }
-        // использовать индексаторы с бордой 
-
-        public void Turn()
-        {
-            Coordinates userCoords = inputHandler.GetCoordinates();
-            ShootToTtile(userCoords);
-            outputHandler.DisplayBoard();
+            _board = board;
+            _inputHandler = inputHandler;
+            _outputHandler = outputHandler;
         }
 
-        public void ShootToTtile(Coordinates coords)
-        {
-            var currentPanel = board[coords];
-
-            if (currentPanel.panelState == PanelState.ContainsShip)
-            {
-                HitShip(currentPanel, coords);
-                return;
-            }
-            else if (currentPanel.panelState == PanelState.Empty)
-            {
-                Console.WriteLine("Miss");
-                currentPanel.RegisterShot();
-
-            }
-            else
-            {
-                Console.WriteLine("You already shooted at this title!");
-            }
-        }
-
-        public void HitShip(Panel currentPanel, Coordinates userCoords)
+        private void HitShip(Panel currentPanel, Coordinates userCoords)
         {
             var ship = currentPanel.Ship;
             Console.WriteLine($"You hit {ship.Name}");
@@ -66,34 +27,59 @@ namespace EngineNamespace
 
             if (ship.IsDestroyed)
             {
-                //потом окружить корбаль (x)
                 Console.WriteLine($"Ship {ship.Name} destroyed!!");
             }
             currentPanel.RegisterShot();
         }
 
-        public void Start()
+        public PanelState ShootToTtile(Coordinates coords)
         {
-            ShipPlacer shipPlacer = new ShipPlacer(board);
-            board.FillBoard();
+            var currentPanel = _board[coords];
 
-            shipPlacer.PlaceShip(new Cruiser());
-            shipPlacer.PlaceShip(new Cruiser());
-            shipPlacer.PlaceShip(new Cruiser());
-
-            outputHandler.DisplayBoard();
-          
-            //foreach ((int x, int y) coords in allShipsPositions
-            //{
-            //    Console.WriteLine((coords.x + 1, coords.y + 1));
-            //}
-
-            while (true)
+            if (currentPanel.PanelState == PanelState.ContainsShip)
             {
-                Turn();
+                HitShip(currentPanel, coords);
+                return PanelState.Shooted;
             }
+            else if (currentPanel.PanelState == PanelState.Empty)
+            {
 
+                Console.WriteLine("Miss");
+                currentPanel.RegisterShot();
+                return PanelState.Miss;
+            }
+            else
+            {
+                Console.WriteLine("You already shot at this tile!");
+                return currentPanel.PanelState; //potential error place
+            }
         }
 
+        public void DisplayBoard()
+        {
+            _outputHandler.DisplayBoard();
+        }
+
+        public async Task<PanelState> HandleSendingCoordiantesAsync()
+        {
+            Coordinates userCoords = await _inputHandler.GetCoordinatesAsync();
+            PanelState panelStateAfterShoot = ShootToTtile(userCoords);
+            return panelStateAfterShoot;
+        }
+
+        public void Start()
+        {
+            _board.FillBoard();
+            PlaceShips();
+        }
+
+        public void PlaceShips()
+        {
+            ShipPlacer shipPlacer = new ShipPlacer(_board);
+
+            shipPlacer.PlaceShip(new Cruiser());
+            shipPlacer.PlaceShip(new Cruiser());
+            shipPlacer.PlaceShip(new Cruiser());
+        }
     }
 }

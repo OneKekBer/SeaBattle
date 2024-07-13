@@ -1,5 +1,6 @@
 ﻿using BoardNamespace;
-using SeaBattle.Output;
+using SeaBattle.Engine.Interfaces;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +24,18 @@ namespace ConsoleApplication.Output
             {
                 for (int j = 0; j < currentBoard.board.GetLength(1); j++)
                 {
-                    if (currentBoard.board[i, j].panelState == PanelState.Shooted)
+                    //Console.WriteLine(currentBoard.board[i, j].PanelState);
+                    if (currentBoard.board[i, j].PanelState == PanelState.Miss)
                     {
                         Console.Write(" x ");
                         continue;
                     }
-                    if (currentBoard.board[i, j].panelState == PanelState.ContainsShip)
+                    else if(currentBoard.board[i, j].PanelState == PanelState.Shooted)
+                    {
+                        Console.Write(" s ");
+                        continue;
+                    }
+                    else if (currentBoard.board[i, j].PanelState == PanelState.ContainsShip)
                     {
                         Console.Write(" u ");
                         continue;
@@ -44,5 +51,6 @@ namespace ConsoleApplication.Output
         {
             PrintBoard();
         }
+
     }
 }

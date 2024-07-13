@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SeaBattle.Models;
+﻿
 using SeaBattle.Models.Abstarcts;
 using SeaBattle.Values;
 
@@ -19,23 +14,26 @@ namespace BoardNamespace
 {
     public class Panel 
     {
-        public PanelState panelState { get; private set; } = PanelState.Empty;
+        public PanelState PanelState { get; private set; } = PanelState.Empty;
         public Ship Ship { get; set; } 
 
         public void PlaceShip(Ship ship)
         {
-            if (Ship is not null) 
+            if (Ship is not null)
+            {
                 throw new Exception("");
-            panelState = PanelState.ContainsShip;
+                //return;
+            }
+            PanelState = PanelState.ContainsShip;
             Ship = ship;
         }
 
         public void RegisterShot()
         {
             if(Ship is not null)
-                panelState = PanelState.Shooted;
+                PanelState = PanelState.Shooted;
             else 
-                panelState = PanelState.Miss;
+                PanelState = PanelState.Miss;
         }
     }
 
@@ -63,7 +61,7 @@ namespace BoardNamespace
 
         public void GetItemOnTitle(Coordinates coords)
         {
-            Console.WriteLine(board[coords.Y - 1, coords.X - 1].panelState);
+            Console.WriteLine(board[coords.Y - 1, coords.X - 1].PanelState);
         }
     }
 }
