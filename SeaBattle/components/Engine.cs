@@ -73,6 +73,12 @@ namespace EngineNamespace
             PlaceShips();
         }
 
+        public void Start()
+        {
+            _board.FillBoard();
+            PlaceShips();
+        }
+
         public void PlaceShips()
         {
             ShipPlacer shipPlacer = new ShipPlacer(_board);

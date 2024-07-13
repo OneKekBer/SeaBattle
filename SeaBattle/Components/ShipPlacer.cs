@@ -173,8 +173,9 @@ namespace SeaBattle.Components
                         Console.WriteLine("next coords " + nextCoords);
                         i++;
                     }
-                    catch
+                    catch (Exception e)
                     {
+                        Console.WriteLine(e.Message);
                         options.Clear();
                         i = 1;
                         break;
@@ -204,6 +205,7 @@ namespace SeaBattle.Components
                 if (circleCoords == lastOption) continue;
                 if (board[circleCoords].PanelState == PanelState.ContainsShip)
                 {
+                    Console.WriteLine(board[circleCoords].PanelState);
                     return true;
                 }
             }
