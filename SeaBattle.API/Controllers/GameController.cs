@@ -7,7 +7,6 @@ using SeaBattle.Values;
 using Microsoft.AspNetCore.Cors;
 using SeaBattle.API.Services;
 using SeaBattle.API.Domains.Engine.Models;
-using SeaBattle.API.Controllers;
 
 namespace WebApp.Controllers
 {
