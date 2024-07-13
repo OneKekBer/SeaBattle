@@ -19,8 +19,11 @@ namespace BoardNamespace
 
         public void PlaceShip(Ship ship)
         {
-            if (Ship is not null) 
+            if (Ship is not null)
+            {
                 throw new Exception("");
+                //return;
+            }
             PanelState = PanelState.ContainsShip;
             Ship = ship;
         }

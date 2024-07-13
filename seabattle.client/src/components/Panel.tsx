@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-type PanelState = 'Empty' | 'Miss' | 'Shooted' // shooted не доза!
+type PanelState = 'Empty' | 'Miss' | 'Shooted'
 
 const getColorForPanel = (panelState: PanelState) => {
 	if (panelState === 'Miss') return 'bg-yellow-200'
@@ -49,7 +49,7 @@ const Panel = ({
 	return (
 		<span
 			onClick={() => handlePlateClick(cellIndex, rowIndex)}
-			className={`w-[50px] border border-gray-400 h-[50px] ${getColorForPanel(
+			className={`w-[50px] border cursor-pointer border-gray-400 h-[50px] ${getColorForPanel(
 				panelState
 			)}`}
 		></span>

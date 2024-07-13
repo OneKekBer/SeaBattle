@@ -17,12 +17,19 @@ namespace SeaBattle.API.Services
         public GameLogicService(WebInput webInput)
         {
             _webInput = webInput;
-            engine = new EngineNamespace.Engine(board, _webInput, _webOutput);
+            engine = new EngineNamespace.Engine(board, _webInput, null);
+
+            engine.Start();
         }
 
         public async Task SendCoordsToWebInput(Coordinates coordinates)
         {
             await _webInput.GetCoordinatesFromController(coordinates);
+        }
+
+        public void StartGame()
+        {
+            engine.Start();
         }
 
         public void RestartGame()
